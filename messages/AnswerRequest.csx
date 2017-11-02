@@ -32,15 +32,6 @@ public class AnswerRequest : IDialog<object>
         var message = await argument;
         if (message.Text == "reset")
         {
-            PromptDialog.Confirm(
-                context,
-                AfterResetAsync,
-                "Are you sure you want to reset the count?",
-                "Didn't get that!",
-                promptStyle: PromptStyle.Auto);
-        }
-        else
-        {
             await context.PostAsync($"{this.count++}: You said {message.Text}");
             context.Wait(MessageReceivedAsync);
         }
