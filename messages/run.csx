@@ -1,5 +1,5 @@
 #r "Newtonsoft.Json"
-#load "AnswerTheUser.csx"
+#load "EchoDialog.csx"
 
 using System;
 using System.Net;
@@ -44,10 +44,28 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
             // one of these will have an interface and process it
             switch (activity.GetActivityType())
             {
-                case ActivityTypes.Message:                    
-                    await Conversation.SendAsync(activity, () => new AnswerTheUser());
+                case ActivityTypes.Message:
+                    await Conversation.SendAsync(activity, () => new EchoDialog());
                     break;
                 case ActivityTypes.ConversationUpdate:
+                    var client = new ConnectorClient(new Uri(activity.ServiceUrl));
+                    IConversationUpdateActivity update = activity;
+                    if (update.MembersAdded.Any())
+                    {
+                        var reply = activity.CreateReply();
+                        var newMembers = update.MembersAdded?.Where(t => t.Id != activity.Recipient.Id);
+                        foreach (var newMember in newMembers)
+                        {
+                            reply.Text = "Welcome";
+                            if (!string.IsNullOrEmpty(newMember.Name))
+                            {
+                                reply.Text += $" {newMember.Name}";
+                            }
+                            reply.Text += "!";
+                            await client.Conversations.ReplyToActivityAsync(reply);
+                        }
+                    }
+                    break;
                 case ActivityTypes.ContactRelationUpdate:
                 case ActivityTypes.Typing:
                 case ActivityTypes.DeleteUserData:
