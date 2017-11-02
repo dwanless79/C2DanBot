@@ -1,5 +1,5 @@
 #r "Newtonsoft.Json"
-#load "EchoDialog.csx"
+#load "AnswerTheUser.csx"
 
 using System;
 using System.Net;
@@ -44,7 +44,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
             // one of these will have an interface and process it
             switch (activity.GetActivityType())
             {
-                case ActivityTypes.Message:
+                case ActivityTypes.Message:                    
                     await Conversation.SendAsync(activity, () => new EchoDialog());
                     break;
                 case ActivityTypes.ConversationUpdate:
