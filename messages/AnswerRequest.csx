@@ -5,7 +5,7 @@ using Microsoft.Bot.Connector;
 
 // For more information about this template visit http://aka.ms/azurebots-csharp-basic
 [Serializable]
-public class EchoDialog : IDialog<object>
+public class AnswerRequest : IDialog<object>
 {
     protected int count = 1;
 
