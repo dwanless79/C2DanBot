@@ -40,22 +40,6 @@ public class AnswerRequest : IDialog<object>
 [Serializable]
 public class RootLuisDialog : LuisDialog<object>
 {
-    [LuisIntent("tell.joke")]
-    public async Task TellAJoke(IDialogContext context, LuisResult result)
-    {
-        var message = await argument;
-        await context.PostAsync("A Joke");
-        context.Wait(this.TellAJoke);
-    }
-
-    [LuisIntent("")]
-    [LuisIntent("None")]
-    public async Task DidntUnderstand(IDialogContext context, LuisResult result)
-    {
-        var message = await argument;
-        await context.PostAsync("Sorry i dont understand");
-        context.Wait(this.DidntUnderstand);
-    }
 
 
 }
