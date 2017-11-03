@@ -45,7 +45,7 @@ public class RootLuisDialog : LuisDialog<object>
     {
         var message = await argument;
         await context.PostAsync("A Joke");
-        context.Wait(MessageReceivedAsync);
+        context.Wait(this.TellAJoke);
     }
 
     [LuisIntent("")]
@@ -54,6 +54,8 @@ public class RootLuisDialog : LuisDialog<object>
     {
         var message = await argument;
         await context.PostAsync("Sorry i dont understand");
-        context.Wait(MessageReceivedAsync);
+        context.Wait(this.DidntUnderstand);
     }
+
+
 }
