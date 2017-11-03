@@ -43,7 +43,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
             switch (activity.GetActivityType())
             {
                 case ActivityTypes.Message:
-                    await Conversation.SendAsync(activity, () => new AnswerRequest());
+                    await Conversation.SendAsync(activity, () => new RootLuisDialog());
                     break;
                 case ActivityTypes.ConversationUpdate:
                 case ActivityTypes.ContactRelationUpdate:
